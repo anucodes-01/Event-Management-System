@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Event Management by Techies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <style>
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        .event-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .event-details {
+            padding: 20px;
+            background: white;
+        }
+        .event-date {
+            color: #4CAF50;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .event-cta {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f9f9f9;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="event__container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.jpeg" alt="Event Management by Techies Logo">
+                </a>
+            </div>
+            <div class="sidemenu__container">
+                <div class="side__menu__choice">
+                    <a href="dashboard.html">
+                        <div class="row">
+                            <img src="dashboard.png" alt="Dashboard Icon">
+                            <p>Dashboard</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="events.html">
+                        <div class="row">
+                            <img src="event.png" alt="Events Icon">
+                            <p>Events</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="organizers.html">
+                        <div class="row">
+                            <img src="organizer.png" alt="Organizers Icon">
+                            <p>Organizers</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="venues.html">
+                        <div class="row">
+                            <img src="venue.png" alt="Venues Icon">
+                            <p>Venues</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="mybookings.html">
+                        <div class="row">
+                            <img src="booking.png" alt="My Bookings Icon">
+                            <p>My Bookings</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="profile.html">
+                        <div class="row">
+                            <img src="profile.png" alt="Profile Icon">
+                            <p>My Profile</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="main__content">
+                <h1>Upcoming Events</h1>
+                
+                <!-- Event Filter Controls -->
+                <div class="filter-controls">
+                    <button class="filter-btn active" onclick="filterEvents('all')">All Events</button>
+                    <button class="filter-btn" onclick="filterEvents('conference')">Conferences</button>
+                    <button class="filter-btn" onclick="filterEvents('concert')">Concerts</button>
+                    <button class="filter-btn" onclick="filterEvents('wedding')">Weddings</button>
+                    <button class="filter-btn" onclick="filterEvents('exhibition')">Exhibitions</button>
+                </div>
+                
+                <!-- Events Grid -->
+                <div class="events-container" id="eventsContainer">
+                    <!-- Event cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <footer>
+        <div class="footer__content">
+            <p>&copy; 2024 Event Management by Techies. All Rights Reserved.</p>
+            <div class="footer__links">
+                <a href="about.html">About Us</a> | 
+                <a href="contactus.html">Contact Us</a> | 
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample event data
+        const eventsData = [
+            {
+                id: 1,
+                title: "Tech Innovation Summit",
+                type: "conference",
+                date: "2024-11-15",
+                location: "Convention Center, Mumbai",
+                image: "tech-summit.jpg",
+                organizer: "Tech Events India"
+            },
+            {
+                id: 2,
+                title: "Bollywood Night Live",
+                type: "concert",
+                date: "2024-12-20",
+                location: "Open Air Theater, Delhi",
+                image: "bollywood-night.jpg",
+                organizer: "Entertainment Hub"
+            },
+            {
+                id: 3,
+                title: "Premium Wedding Expo",
+                type: "wedding",
+                date: "2024-10-10",
+                location: "Grand Hyatt, Bangalore",
+                image: "wedding-expo.jpg",
+                organizer: "Wedding Planners Association"
+            },
+            {
+                id: 4,
+                title: "AI & Robotics Exhibition",
+                type: "exhibition",
+                date: "2024-09-25",
+                location: "Science City, Kolkata",
+                image: "ai-exhibition.jpg",
+                organizer: "Future Tech Foundation"
+            },
+            {
+                id: 5,
+                title: "Startup Pitch Competition",
+                type: "conference",
+                date: "2024-11-05",
+                location: "Innovation Hub, Hyderabad",
+                image: "startup-pitch.jpg",
+                organizer: "Entrepreneurs Network"
+            },
+            {
+                id: 6,
+                title: "Classical Music Festival",
+                type: "concert",
+                date: "2024-12-15",
+                location: "Royal Opera House, Mumbai",
+                image: "music-festival.jpg",
+                organizer: "Cultural Events India"
+            }
+        ];
+
+        // Function to render events
+        function renderEvents(filter = 'all') {
+            const container = document.getElementById('eventsContainer');
+            container.innerHTML = '';
+            
+            const filteredEvents = filter === 'all' 
+                ? eventsData 
+                : eventsData.filter(event => event.type === filter);
+            
+            filteredEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.innerHTML = `
+                    <img src="${event.image}" alt="${event.title}" class="event-image">
+                    <div class="event-details">
+                        <h3>${event.title}</h3>
+                        <p><i class="fi fi-sr-marker"></i> ${event.location}</p>
+                        <p><i class="fi fi-sr-user"></i> ${event.organizer}</p>
+                        <div class="event-date">${formatDate(event.date)}</div>
+                        <a href="event-details.html?id=${event.id}" class="event-cta">View Details</a>
+                        <a href="rsvp.html?event=${encodeURIComponent(event.title)}" class="event-cta">Book Now</a>
+                    </div>
+                `;
+                container.appendChild(eventCard);
+            });
+        }
+
+        // Function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Function to filter events
+        function filterEvents(type) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderEvents(type);
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEvents();
+        });
+    </script>
+</body>
+</html>

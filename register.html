@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Event Management by Techies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <style>
+       .register-container {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+}
+
+.register-left {
+    flex: 1;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                url('register-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.register-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+    background: white;
+}
+
+.register-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.register-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.register-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.register-form {
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.register-btn {
+    width: 100%;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    background: #43a047;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.login-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+    }
+
+    .register-left {
+        display: none;
+    }
+
+    .register-right {
+        padding: 30px 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <!-- Left Side (Image/Info) -->
+        <div class="register-left">
+            <div class="register-logo">Event Management by Techies</div>
+            <h1>Join Our Community</h1>
+            <p>Discover and book the best events with our platform. Register now to get started!</p>
+            <div style="margin-top: 30px;">
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <i class="fi fi-sr-check" style="color: #4CAF50; font-size: 1.2rem; margin-right: 10px;"></i>
+                    <span>Access to premium events</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <i class="fi fi-sr-check" style="color: #4CAF50; font-size: 1.2rem; margin-right: 10px;"></i>
+                    <span>Easy booking management</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <i class="fi fi-sr-check" style="color: #4CAF50; font-size: 1.2rem; margin-right: 10px;"></i>
+                    <span>Personalized recommendations</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Side (Form) -->
+        <div class="register-right">
+            <div class="register-form">
+                <div class="register-logo">Event Management by Techies</div>
+                <h2 class="register-title">Create Account</h2>
+                <p class="register-subtitle">Fill in your details to register</p>
+                
+                <form id="registrationForm" onsubmit="return validateForm()">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="fullName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="input-with-icon">
+                            <input type="password" class="form-input" id="password" required>
+                            <i class="fi fi-sr-eye input-icon" onclick="togglePassword('password')"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-with-icon">
+                            <input type="password" class="form-input" id="confirmPassword" required>
+                            <i class="fi fi-sr-eye input-icon" onclick="togglePassword('confirmPassword')"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 30px;">
+                        <button type="submit" class="register-btn">Register</button>
+                    </div>
+                    
+                    <div class="login-link">
+                        Already have an account? <a href="login.html">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = event.target;
+            
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fi-sr-eye');
+                icon.classList.add('fi-sr-eye-crossed');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fi-sr-eye-crossed');
+                icon.classList.add('fi-sr-eye');
+            }
+        }
+        
+        // Form validation
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Name validation
+            if (fullName.length < 3) {
+                alert('Please enter a valid full name (at least 3 characters)');
+                return false;
+            }
+            
+            // Email validation
+            const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+            
+            // Phone validation (simple Indian phone validation)
+            const phonePattern = /^[0-9]{10}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Please enter a valid 10-digit phone number');
+                return false;
+            }
+            
+            // Password validation
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return false;
+            }
+            
+            // Password match validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+            
+            // In a real app, this would submit to server
+            alert('Registration successful! Redirecting to dashboard...');
+            window.location.href = 'dashboard.html';
+            return false; // Prevent actual form submission for this demo
+        }
+    </script>
+</body>
+</html>

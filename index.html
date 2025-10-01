@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management by Techies</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .nav__logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+        .cta-button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            background: #3e8e41;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 0;
+            flex-wrap: wrap;
+        }
+        .feature-card {
+            width: 30%;
+            text-align: center;
+            padding: 30px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="section__container nav__container">
+        <div class="nav__logo">Events by Techies</div>
+        <ul class="nav__links">
+            <li class="link"><a href="index.html">HOME</a></li>
+            <li class="link"><a href="register.html">REGISTER</a></li>
+            <li class="link"><a href="events.html">EVENTS</a></li>
+            <li class="link"><a href="contactus.html">CONTACT US</a></li>
+            <li class="link"><a href="about.html">ABOUT US</a></li>
+            <li class="link"><a href="dashboard.html">DASHBOARD</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section with new background image -->
+    <section class="hero">
+        <h1 style="font-size: 2.5rem;">Professional Event Management</h1>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">From corporate meetings to dream weddings - we make it effortless with technical precision</p>
+        <a href="register.html" class="cta-button">Get Started Now</a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section__container">
+        <h2 style="text-align: center; margin-bottom: 40px;">Why Choose Event Management by Techies?</h2>
+        <div class="features">
+            <div class="feature-card">
+                
+                <h3>Premium Venues</h3>
+                <p>Technologically-enabled venues with advanced facilities</p>
+                <a href="venues.html" style="color: #4CAF50; text-decoration: none;">Browse Venues →</a>
+            </div>
+            <div class="feature-card">
+                
+                <h3>Tech-Savvy Organizers</h3>
+                <p>Experts who leverage technology for flawless events</p>
+                <a href="organizers.html" style="color: #4CAF50; text-decoration: none;">Meet Organizers →</a>
+            </div>
+            <div class="feature-card">
+                
+                <h3>Smart Booking</h3>
+                <p>Our intelligent system finds perfect matches for your needs</p>
+                <a href="rsvp.html" style="color: #4CAF50; text-decoration: none;">Book Now →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer__content">
+            <p>&copy; 2024 Event Management by Techies. All Rights Reserved.</p>
+            <div class="footer__links">
+                <a href="about.html">About Us</a> | 
+                <a href="contactus.html">Contact</a> | 
+                <a href="privacy.html">Privacy</a> | 
+                <a href="terms.html">Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

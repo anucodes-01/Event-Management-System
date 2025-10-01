@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venues - Event Management by Techies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <style>
+        .venues-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 30px;
+        }
+        .venue-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            background: white;
+        }
+        .venue-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .venue-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .venue-details {
+            padding: 20px;
+        }
+        .venue-capacity {
+            color: #4CAF50;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .venue-cta {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 15px;
+            margin-right: 10px;
+        }
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f9f9f9;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .amenity {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="event__container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.jpeg" alt="Event Management by Techies Logo">
+                </a>
+            </div>
+            <div class="sidemenu__container">
+                <div class="side__menu__choice">
+                    <a href="dashboard.html">
+                        <div class="row">
+                            <img src="dashboard.png" alt="Dashboard Icon">
+                            <p>Dashboard</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="events.html">
+                        <div class="row">
+                            <img src="event.png" alt="Events Icon">
+                            <p>Events</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="organizers.html">
+                        <div class="row">
+                            <img src="organizer.png" alt="Organizers Icon">
+                            <p>Organizers</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="venues.html">
+                        <div class="row">
+                            <img src="venue.png" alt="Venues Icon">
+                            <p>Venues</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="mybookings.html">
+                        <div class="row">
+                            <img src="booking.png" alt="My Bookings Icon">
+                            <p>My Bookings</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="profile.html">
+                        <div class="row">
+                            <img src="profile.png" alt="Profile Icon">
+                            <p>My Profile</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="main__content">
+                <h1>Our Premium Venues</h1>
+                
+                <!-- Venue Filter Controls -->
+                <div class="filter-controls">
+                    <button class="filter-btn active" onclick="filterVenues('all')">All Venues</button>
+                    <button class="filter-btn" onclick="filterVenues('convention')">Convention Centers</button>
+                    <button class="filter-btn" onclick="filterVenues('hotel')">Hotels</button>
+                    <button class="filter-btn" onclick="filterVenues('outdoor')">Outdoor Spaces</button>
+                    <button class="filter-btn" onclick="filterVenues('unique')">Unique Venues</button>
+                </div>
+                
+                <!-- Venues Grid -->
+                <div class="venues-container" id="venuesContainer">
+                    <!-- Venue cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <footer>
+        <div class="footer__content">
+            <p>&copy; 2024 Event Management by Techies. All Rights Reserved.</p>
+            <div class="footer__links">
+                <a href="about.html">About Us</a> | 
+                <a href="contactus.html">Contact Us</a> | 
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample venue data
+        const venuesData = [
+            {
+                id: 1,
+                name: "Grand Convention Center",
+                type: "convention",
+                location: "Mumbai",
+                capacity: "500-5000 people",
+                image: "convention-center.jpg",
+                price: "₹50,000 - ₹5,00,000",
+                amenities: ["WiFi", "Projector", "Catering", "Parking", "AC"]
+            },
+            {
+                id: 2,
+                name: "Luxury Beach Resort",
+                type: "hotel",
+                location: "Goa",
+                capacity: "50-500 people",
+                image: "beach-resort.jpg",
+                price: "₹75,000 - ₹7,50,000",
+                amenities: ["Pool", "Beach Access", "Spa", "Restaurant", "AC"]
+            },
+            {
+                id: 3,
+                name: "Royal Palace Gardens",
+                type: "outdoor",
+                location: "Jaipur",
+                capacity: "200-2000 people",
+                image: "palace-garden.jpg",
+                price: "₹1,00,000 - ₹10,00,000",
+                amenities: ["Outdoor", "Decor", "Parking", "Catering"]
+            },
+            {
+                id: 4,
+                name: "Tech Innovation Hub",
+                type: "unique",
+                location: "Bangalore",
+                capacity: "100-1000 people",
+                image: "tech-hub.jpg",
+                price: "₹60,000 - ₹6,00,000",
+                amenities: ["AV Equipment", "WiFi", "Workspaces", "Cafeteria"]
+            },
+            {
+                id: 5,
+                name: "Five Star Hotel Ballroom",
+                type: "hotel",
+                location: "Delhi",
+                capacity: "150-1500 people",
+                image: "hotel-ballroom.jpg",
+                price: "₹80,000 - ₹8,00,000",
+                amenities: ["Luxury Decor", "Catering", "Valet", "AC", "WiFi"]
+            },
+            {
+                id: 6,
+                name: "Vineyard Estate",
+                type: "unique",
+                location: "Nashik",
+                capacity: "100-800 people",
+                image: "vineyard.jpg",
+                price: "₹90,000 - ₹9,00,000",
+                amenities: ["Scenic Views", "Outdoor", "Wine Tasting", "Parking"]
+            }
+        ];
+
+        // Function to render venues
+        function renderVenues(filter = 'all') {
+            const container = document.getElementById('venuesContainer');
+            container.innerHTML = '';
+            
+            const filteredVenues = filter === 'all' 
+                ? venuesData 
+                : venuesData.filter(venue => venue.type === filter);
+            
+            filteredVenues.forEach(venue => {
+                const venueCard = document.createElement('div');
+                venueCard.className = 'venue-card';
+                venueCard.innerHTML = `
+                    <img src="${venue.image}" alt="${venue.name}" class="venue-image">
+                    <div class="venue-details">
+                        <h3>${venue.name}</h3>
+                        <p><i class="fi fi-sr-marker"></i> ${venue.location}</p>
+                        <div class="venue-capacity">${venue.capacity}</div>
+                        <p><strong>Price Range:</strong> ${venue.price}</p>
+                        
+                        <div class="amenities">
+                            ${venue.amenities.map(amenity => 
+                                `<span class="amenity">${amenity}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        <a href="venue-details.html?id=${venue.id}" class="venue-cta">View Details</a>
+                        <a href="rsvp.html?venue=${encodeURIComponent(venue.name)}" class="venue-cta">Book Now</a>
+                    </div>
+                `;
+                container.appendChild(venueCard);
+            });
+        }
+
+        // Function to filter venues
+        function filterVenues(type) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderVenues(type);
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVenues();
+        });
+    </script>
+</body>
+</html>

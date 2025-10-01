@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Organizers</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <style>
+        .organizer__actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .book-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .info-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="appointment__container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.jpeg" alt="Event Planner Logo">
+                </a>
+            </div>
+            <div class="sidemenu__container">
+                <div class="side__menu__choice">
+                    <a href="dashboard.html">
+                        <div class="row">
+                            <img src="dashboard.png" alt="Dashboard Icon">
+                            <p>Dashboard</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="events.html">
+                        <div class="row">
+                            <img src="event.png" alt="Events Icon">
+                            <p>Events</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="organizers.html">
+                        <div class="row">
+                            <img src="organizer.png" alt="Organizers Icon">
+                            <p>Organizers</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="venues.html">
+                        <div class="row">
+                            <img src="venue.png" alt="Venues Icon">
+                            <p>Venues</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="mybookings.html">
+                        <div class="row">
+                            <img src="booking.png" alt="My Bookings Icon">
+                            <p>My Bookings</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="side__menu__choice">
+                    <a href="profile.html">
+                        <div class="row">
+                            <img src="profile.png" alt="Profile Icon">
+                            <p>My Profile</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="main__content">
+                <h1>Event Organizers</h1>
+                <div class="scrollable__container">
+                    <ul class="nav__links">
+                        <li class="link" onclick="filterOrganizers('all')">
+                            <div class="scrollable__menu__bttn">All</div>
+                        </li>
+                        <li class="link" onclick="filterOrganizers('Corporate')">
+                            <div class="scrollable__menu__bttn">Corporate</div>
+                        </li>
+                        <li class="link" onclick="filterOrganizers('Wedding')">
+                            <div class="scrollable__menu__bttn">Wedding</div>
+                        </li>
+                        <li class="link" onclick="filterOrganizers('Concert')">
+                            <div class="scrollable__menu__bttn">Concert</div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Organizers list container -->
+                <div class="organizers__list" id="organizersContainer"></div>                            
+            </div>
+        </div>
+    </header>
+
+    <script>
+        // Define event organizers in an array
+        const organizersData = [
+            {
+                name: 'Amit Shah',
+                category: 'Corporate',
+                scheduleLink: 'booking.html',
+                moreInfoLink: 'organizer-details.html?id=1'
+            },
+            {
+                name: 'Neha Joshi',
+                category: 'Wedding',
+                scheduleLink: 'booking.html',
+                moreInfoLink: 'organizer-details.html?id=2'
+            },
+            {
+                name: 'Rahul Mehta',
+                category: 'Concert',
+                scheduleLink: 'booking.html',
+                moreInfoLink: 'organizer-details.html?id=3'
+            },
+            {
+                name: 'Priya Singh',
+                category: 'Wedding',
+                scheduleLink: 'booking.html',
+                moreInfoLink: 'organizer-details.html?id=4'
+            },
+            {
+                name: 'Rajesh Iyer',
+                category: 'Corporate',
+                scheduleLink: 'booking.html',
+                moreInfoLink: 'organizer-details.html?id=5'
+            }
+        ];
+
+        // Function to render organizers dynamically
+        function renderOrganizers(category) {
+            const organizersContainer = document.getElementById('organizersContainer');
+            organizersContainer.innerHTML = '';  // Clear existing content
+
+            // Loop through data and add matching organizers
+            organizersData.forEach(organizer => {
+                if (category === 'all' || organizer.category === category) {
+                    const organizerElement = document.createElement('div');
+                    organizerElement.classList.add('organizer__card');
+                    organizerElement.setAttribute('data-category', organizer.category);
+
+                    // Set inner HTML for the organizer's profile with buttons
+                    organizerElement.innerHTML = `
+                        <div class="organizer__details">
+                            <h4>${organizer.name}</h4>
+                            <p>${organizer.category} Events</p>
+                            <div class="organizer__actions">
+                                <button class="action-btn book-btn" onclick="window.location.href='${organizer.scheduleLink}'">Book Now</button>
+                                <button class="action-btn info-btn" onclick="window.location.href='${organizer.moreInfoLink}'">More Info</button>
+                            </div>
+                        </div>
+                    `;
+
+                    // Append the organizer profile to the container
+                    organizersContainer.appendChild(organizerElement);
+                }
+            });
+        }
+
+        // Initial render - show all organizers
+        renderOrganizers('all');
+
+        // Filter organizers based on category
+        function filterOrganizers(category) {
+            renderOrganizers(category);
+        }
+    </script>
+</body>
+</html>

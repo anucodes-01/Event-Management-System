@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="appointment__container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.jpeg" alt="Event Planner Logo">
+                </a>
+            </div>
+
+            <div class="sidemenu__container">
+                <div class="side__menu__choice"><a href="dashboard.html"><div class="row"><img src="dashboard.png" alt="Dashboard Icon"><p>Dashboard</p></div></a></div>
+                <div class="side__menu__choice"><a href="events.html"><div class="row"><img src="event.png" alt="Events Icon"><p>Events</p></div></a></div>
+                <div class="side__menu__choice"><a href="organizers.html"><div class="row"><img src="organizer.png" alt="Organizers Icon"><p>Organizers</p></div></a></div>
+                <div class="side__menu__choice"><a href="venues.html"><div class="row"><img src="venue.png" alt="Venues Icon"><p>Venues</p></div></a></div>
+                <div class="side__menu__choice"><a href="mybookings.html"><div class="row"><img src="booking.png" alt="My Bookings Icon"><p>My Bookings</p></div></a></div>
+                <div class="side__menu__choice"><a href="profile.html"><div class="row"><img src="profile.png" alt="Profile Icon"><p>My Profile</p></div></a></div>
+            </div>
+
+            <div class="main__content">
+                <h1>Book an Event</h1>
+                <div class="row">
+                    <div class="quickbooking__container">
+                        <div class="form__container">
+                            <div class="column">
+                                <div class="row">
+                                    <h2>Schedule an Event</h2>
+                                    <img src="calendar.png" alt="Calendar Icon">
+                                </div>
+                                <div class="column">
+                                    <label for="event-type">Select Event Type:</label>
+                                    <select id="event-type" class="dropdown">
+                                        <option value="">-- Select Event --</option>
+                                        <option value="conference">Conference</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="concert">Concert</option>
+                                        <option value="exhibition">Exhibition</option>
+                                    </select>
+                                </div>
+                                <div class="column">
+                                    <label for="organizer">Select Organizer:</label>
+                                    <select id="organizer" class="dropdown">
+                                        <option value="">-- Select Organizer --</option>
+                                        <option value="event_co">Event Co.</option>
+                                        <option value="party_planners">Party Planners</option>
+                                        <option value="music_live">Music Live</option>
+                                    </select>
+                                </div>
+                                <div class="column">
+                                    <label for="time">Available Timings:</label>
+                                    <select id="time" class="dropdown">
+                                        <option value="">-- Select Time --</option>
+                                        <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                                        <option value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</option>
+                                        <option value="6:00 PM - 8:00 PM">6:00 PM - 8:00 PM</option>
+                                    </select>
+                                </div>
+                                <div class="column">
+                                    <label for="event-date">Select Date:</label>
+                                    <input type="date" id="event-date" class="date__picker">
+                                    <button class="bttn form__bttn" onclick="scheduleEvent()">Schedule Event</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="confirmation__container" id="confirmationContainer" style="display: none;">
+                        <div class="column">
+                            <div class="row">
+                                <h2>Event Confirmation</h2>
+                                <img src="check-mark.png" alt="Checkmark Icon">
+                            </div>
+                            <div class="confirmation__details">
+                                <p><strong>Event:</strong> <span id="confirm-event"></span></p>
+                                <p><strong>Organizer:</strong> <span id="confirm-organizer"></span></p>
+                                <p><strong>Date:</strong> <span id="confirm-date"></span></p>
+                                <p><strong>Time:</strong> <span id="confirm-time"></span></p>
+                            </div>
+                            <button class="bttn form__bttn" onclick="confirmEvent()">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <footer>
+        <div class="footer__content">
+            <p>&copy; 2024 Event Planner. All Rights Reserved.</p>
+            <div class="footer__links">
+                <a href="index.html">Home</a> | 
+                <a href="about.html">About Us</a> | 
+                <a href="contactus.html">Contact Us</a> | 
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('event-date').setAttribute('min', new Date().toISOString().split('T')[0]);
+
+        function scheduleEvent() {
+            const eventType = document.getElementById("event-type").value;
+            const organizer = document.getElementById("organizer").value;
+            const date = document.getElementById("event-date").value;
+            const time = document.getElementById("time").value;
+
+            if (!eventType || !organizer || !date || !time) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Show confirmation
+            document.getElementById("confirm-event").textContent = document.getElementById("event-type").selectedOptions[0].text;
+            document.getElementById("confirm-organizer").textContent = document.getElementById("organizer").selectedOptions[0].text;
+            document.getElementById("confirm-date").textContent = date;
+            document.getElementById("confirm-time").textContent = time;
+
+            document.getElementById("confirmationContainer").style.display = "block";
+        }
+
+        function confirmEvent() {
+            const event = document.getElementById("event-type").value;
+            const organizer = document.getElementById("organizer").value;
+            const date = document.getElementById("event-date").value;
+            const time = document.getElementById("time").value;
+
+            fetch('http://localhost:3032/submit-rsvp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ event, organizer, date, time })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Your event has been confirmed and saved!");
+                    window.location.href = "mybookings.html";
+                } else {
+                    alert("There was an error saving your event. Please try again.");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Server error. Please try again later.");
+            });
+        }
+    </script>
+</body>
+</html>
